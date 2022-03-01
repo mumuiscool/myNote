@@ -30,7 +30,7 @@ Practice and evaluate the components.
 
 
 
-## Scheme Evaluate
+## Scheme Evaluation
 
 There are now three schemes and all schemes are being evaluated.
 
@@ -45,6 +45,20 @@ Use the Druid to parse SQL and implement query code that read and parse the quer
 #### Scheme C 
 
 Use the H2 database CSV function.
+
+#### Analysis
+
+|  Scheme  |        Advantage        |         Disadvantages         |
+| :------: | :---------------------: | :---------------------------: |
+| Scheme A | stronger to parsing SQL |        harder to used         |
+| Scheme B |     easier to used      |     weaked to parsing SQL     |
+| Scheme C |     faster to used.     | harder to develop based on H2 |
+
+#### Recommendation
+
+I recommend using Scheme A.
+
+In the future, it will support many data formats and optimize the query use-time, so we need the space to implement our more targets.
 
 
 
