@@ -46,6 +46,12 @@ Use the Druid to parse SQL and implement query code that read and parse the quer
 
 Use the H2 database CSV function.
 
+#### Scheme D
+
+Use the  Apache Drill to directly implement querying by SQL on the parquert file and supporting other file queryed by the Drill plugin feature.
+
+
+
 #### Analysis
 
 |  Scheme  |        Advantage        |         Disadvantages         |
@@ -53,21 +59,35 @@ Use the H2 database CSV function.
 | Scheme A | stronger to parsing SQL |        harder to used         |
 | Scheme B |     easier to used      |     weaked to parsing SQL     |
 | Scheme C |     faster to used.     | harder to develop based on H2 |
+| Scheme D |     faster to used.     |            heavier            |
 
 #### Recommendation
 
-I recommend using Scheme A.
+I recommend using Scheme D.
 
-In the future, it will support many data formats and optimize the query use-time, so we need the space to implement our more targets.
+It will support many data formats and be used right now.
 
 
 
 ## Scheme A Implementation
 
 1. Use the Apache Calcite for the SQL parsing-engine.
+
 2. Use the Calcite's add-on for the JDBC driver.
+
 3. Base the SpringMVC/Boot for and design a json type to package SQL query.
-4. Configure the data directory or more by Spring-Properties such as application.yml.
+
+4. Configure the data directory or more by Spring-Properties such as `application.yml`.
+
+   
+
+## Scheme C Implementation
+
+Install Apache Drill and test the query statement.
+
+Base the SpringMVC/Boot for and design a json type to package SQL query.
+
+Integrate this Drill  into QuickFileSQL for easier.
 
 
 
@@ -132,8 +152,6 @@ field1,field2,field3
 
 4,5,6
 ```
-
-
 
 
 
