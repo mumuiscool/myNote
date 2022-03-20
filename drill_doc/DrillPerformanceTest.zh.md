@@ -20,21 +20,35 @@
 
 1. Select-count
 
-   测试计数性能
+   测试计数性能，可能涉及全文件扫描情况
 
 2. Where-and
 
+   测试条件语句，查看多条件下性能
+
 3. Where-range
+
+   测试范转条件下性能情况
 
 4. Groupby
 
+   测试分组情况
+
 5. OrderBy
+
+   测试排序情况
 
 6. Join
 
+   测试两表关联查询情况
+
 7. Join-Index
 
+   测试带索引下的查询情况，查看OLDP数据下带索引下的性能提升
+
 8. Sub-sql
+
+   测试子查询性能情况
 
 
 
@@ -42,21 +56,21 @@
 
 ### 单条运行
 
-| 测试项目         | 执行说明 | Drill - Parquet | Mysql InnoDB | 差时 |
-| ---------------- | -------- | --------------- | ------------ | ---- |
-| Select-count     |          |                 |              |      |
-| Where-and        |          |                 |              |      |
-| Where-range      |          |                 |              |      |
-| Where-rang-index |          |                 |              |      |
-| Groupby          |          |                 |              |      |
-| Orderby          |          |                 |              |      |
-| Join             |          |                 |              |      |
-| Join-Index       |          |                 |              |      |
-| Sub-sql          |          |                 |              |      |
+| 测试项目         | Drill - Parquet | Mysql InnoDB | 差时 |
+| ---------------- | --------------- | ------------ | ---- |
+| Select-count     |                 |              |      |
+| Where-and        |                 |              |      |
+| Where-range      |                 |              |      |
+| Where-rang-index |                 |              |      |
+| Groupby          |                 |              |      |
+| Orderby          |                 |              |      |
+| Join             |                 |              |      |
+| Join-Index       |                 |              |      |
+| Sub-sql          |                 |              |      |
 
 ### 并行运行
 
-<格式同上...>
+<未更新>
 
 
 
@@ -68,35 +82,50 @@
 
 ### 测试环境
 
-CPU 内存 存储
+CPU: 8Core 4.Ghz; 内存:64G; 存储:1T ssd
 
-操作系统
+操作系统: Linux  5.13.0-35
 
-数据库
+数据库: Mysql 5.6.x
 
-文件系统
+文件系统: Ext4
 
 
 
 ### 目标数据
 
-数据文件：raven.csv
+数据文件：`mvd.csv`
 
 原始数据结构：CSV
 
-文件大小：25G
+文件大小：30G
 
-列数大小: x列
+列数大小:  6列
 
-行数大小：100，000，000
+行数大小：500，000，000
 
 遍历文件时长：56s
+
+数据样例：
+
+> Title,Genre,Premiere,Runtime,IMDB Score,Language
+> Option Week Mind,Horror,"October 05, 2021",139,1.7,Spanish
+> For Edge Even,Comedy,"December 15, 2021",97,4.3,Italian
+> Us Two Sister,Romance,"May 12, 2020",102,1.6,English
+> Claim Happen Time,Horror,"October 17, 2020",138,3.3,English
+> Indeed Person Big,Mystery,"October 25, 2020",67,3.0,Hindi
+> Page Miss Woman,Romance,"June 19, 2021",114,2.9,Chinese
+> Like First Safe,Thriller,"November 29, 2021",129,1.9,Japanese
+> Figure Kitchen She,Drama,"March 28, 2020",115,2.9,Spanish
+> Ok Nation Doctor,Mystery,"July 18, 2020",55,2.4,Spanish
+
+
 
 ### 关联数据
 
 用于关联测试使用
 
-原始数据结构：CSV
+原始数据结构：`CSV`
 
 
 
@@ -106,29 +135,183 @@ CPU 内存 存储
 
 转换命令如下：
 
-xxxxxxxxxx
+```shell
+python3 tr_csv_parquet.py data/movie/mvd2.csv mvd.parquet
+```
 
 
 
 ### 导入数据
 
-导入格式如下
+导入命令如下：
+
+```mysql
+load data local infile '/home/mmxx/work/drill/data/movie/mvd2.csv' into table big_table character set utf8 fields TERMINATED BY ',' LINES TERMINATED BY '\r\n' ignore 1 lines;
+```
 
 
 
-## 测试方式
+## 测试过程
 
 ### Select-Count
 
-#### Drill执行
+#### 执行SQL：
+
+```sql
+select count(1) from big_data;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
+
+
+
+### Where-and
+
+#### 执行SQL：
+
+```sql
+select count(1) from big_data where Title like '%Person%';
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
+
+
+
+### Where-range
+
+#### 执行SQL：
+
+```sql
+select count(1) from big_data where IMDBScore between 10 and 50;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
+
+
+
+### GroupBy
+
+#### 执行SQL：
+
+```sql
+select Genre,count(1) from big_data where IMDBScore between 10 and 50 group by Genre;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
+
+
+
+### OrderBy
 
 执行SQL：
 
+```sql
+select * from big_data where IMDBScore between 10 and 50 Order by Title limit 10;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
 
 
-执行结果：
+
+### Join
+
+#### 执行SQL：
+
+```sql
+select bd.*,gen.* from big_data bd, genre_info gen 
+where bd.Genre=gen.name and bd.IMDBScore between 10 and 50 
+Order by db.Title
+limit 10;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP(带索引)执行：
+
+​	执行结果：
+
+​	执行时间:
 
 
 
-执行时间:
+### Sub-SQL
 
+#### 执行SQL：
+
+```sql
+select * from big_data where IMDBScore between 10 and 50 
+and Genre in (select name from genre_info where id between 10 and 50  )
+Order by Title limit 10;
+```
+
+#### Drill执行:
+
+​	执行结果：
+
+​	执行时间:
+
+#### OLDP执行：
+
+​	执行结果：
+
+​	执行时间:
