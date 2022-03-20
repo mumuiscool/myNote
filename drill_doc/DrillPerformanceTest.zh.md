@@ -19,17 +19,44 @@
 ## 测试计划
 
 1. Select-count
-2. Select-limit
-3. Where-and
-4. Where-range
-5. Groupby
-6. OrderBy
-7. Joiner
-8. OLDP-Index
+
+   测试计数性能
+
+2. Where-and
+
+3. Where-range
+
+4. Groupby
+
+5. OrderBy
+
+6. Join
+
+7. Join-Index
+
+8. Sub-sql
 
 
 
 ## 测试结果
+
+### 单条运行
+
+| 测试项目         | 执行说明 | Drill - Parquet | Mysql InnoDB | 差时 |
+| ---------------- | -------- | --------------- | ------------ | ---- |
+| Select-count     |          |                 |              |      |
+| Where-and        |          |                 |              |      |
+| Where-range      |          |                 |              |      |
+| Where-rang-index |          |                 |              |      |
+| Groupby          |          |                 |              |      |
+| Orderby          |          |                 |              |      |
+| Join             |          |                 |              |      |
+| Join-Index       |          |                 |              |      |
+| Sub-sql          |          |                 |              |      |
+
+### 并行运行
+
+<格式同上...>
 
 
 
@@ -81,6 +108,8 @@ CPU 内存 存储
 
 xxxxxxxxxx
 
+
+
 ### 导入数据
 
 导入格式如下
@@ -89,5 +118,17 @@ xxxxxxxxxx
 
 ## 测试方式
 
-Select
+### Select-Count
+
+#### Drill执行
+
+执行SQL：
+
+
+
+执行结果：
+
+
+
+执行时间:
 
