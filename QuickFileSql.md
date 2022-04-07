@@ -99,11 +99,8 @@ Integrate this Drill  into QuickFileSQL for easier.
 
 ```shell
 export WORK_HOME=~/work
-
 cd $WORK_HOME
-
 git clone https://gitAddr/quickFileSQL/quickFileSQL
-
 export PATH=$PATH:$WORK_HOME/quickFileSQL/bin
 ```
 
@@ -113,9 +110,7 @@ export PATH=$PATH:$WORK_HOME/quickFileSQL/bin
 
 ```shell
 export QK=$WORK_HOME/qkData
-
 mkdir $QK
-
 cp foo.parquet $QK
 ```
 
@@ -147,9 +142,7 @@ and then will output info below:
 
 ```shell
 field1,field2,field3
-
 1,2,3
-
 4,5,6
 ```
 
@@ -197,23 +190,14 @@ it returned:
 
 ```json
 {
-
 	"querytime": "3ms",
-	
 	"cnt": 1,
-	
 	"data": [
-	
 		{
-	
 			"id": 3,
-	
 			"name": "Mary"
-	
 		}
-	
 	]
-
 }
 ```
 
